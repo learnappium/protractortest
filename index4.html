@@ -1,0 +1,118 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+    <h1>
+      Welcome to {{ title }}!
+    </h1>
+  
+  
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  
+  <div class="container">
+    <h2>Run test</h2>
+    <p>Select spec name and environment and click on Run</p> 
+    
+    <h3>         
+    <table class="table table-striped">
+      <thead> 
+        <tr>
+          <th>spec</th>
+          <th>env</th>
+          <th>jenkins build</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td align="left">
+              <select id="spec" multiple="multiple">
+
+                   <option value="./specs/FirstSpec.js">FirstSpec</option>
+                   <option value="./specs/test2-spec.js">test2-spec</option>
+                   <option value="test1">test1</option>
+                   <option value="test2">test2</option>
+                </select>
+           </td>
+          
+          <td align="center"><select>
+                   <option value="dev" selected>dev</option>
+                   <option value="alpha">alpha</option>
+                   <option value="stg">stg</option>
+                   <option value="prod">prod</option>
+                </select>
+           </td>
+           
+           <td align="center"><select id="build">
+                   <option value="build1">build1</option>
+                   <option value="build2">build2</option>
+                   <option value="build3">build3</option>
+                   <option value="build4">build4</option>
+                </select>
+           </td>
+          
+        </tr>
+        
+      </tbody>
+      
+    </table>
+    </h3>  
+    <h2>
+    <button>Run</button>
+   
+
+    <script type="text/javascript" src="jquery.min.js" crossorigin="anonymous"></script>
+
+  <script>
+
+var loadParentTaskList = function(){
+    $.ajax({
+        url: yoururl,
+        method: 'POST',
+        success: function(data){
+            // To add options list coming from AJAX call multiselect
+            for (var field in data) {
+                $('<option value = "'+ data[field].name +'">' + data[field].name + '</option>').appendTo('#spec');
+            }
+   
+            // To initiate the multiselect call 
+            $("#spec").multiselect({
+                includeSelectAllOption: true
+            })
+        }
+    });
+}
+
+
+  
+  
+  $(document).ready(function(){
+      $("button").click(function(){
+          let build = $('#build').val();
+          let spec = $('#spec').val();
+          $.ajax({
+           url: 'http://localhost:8080/job/' + build + '/buildWithParameters?spec='+spec,
+           type: "POST",
+           
+           success: function() { alert('Success!' + authHeader); }
+        });
+      });
+  });
+  
+  </script>
+
+</h2>
+</div>
+</div>
+
+  
+  
+  
+  
+  
+  
+  
+  
